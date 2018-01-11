@@ -7,16 +7,16 @@ services:
     command: --web --docker --docker.domain=pixhub.fr --logLevel=DEBUG
     ports:
       - "80:80"
-      - "443:443"
-      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /dev/null:/traefik.toml
     networks:
-      - webgateway
+      - dmz
     labels:
-      - "traefik.port=8080"
       - "traefik.frontend.rule=Host:traefik.pixhub.fr"
+      - "traefik.backend=traefik-dashboard"
+      - "traefik.port=8080"
+      - "traefik.docker.network=traefik_dmz"
 
 networks:
   webgateway:
